@@ -14,7 +14,8 @@
 
 best <- function(state, outcome) {
                 data <- read.csv("outcome-of-care-measures.csv",
-                                 colClasses = "character")
+                                 na.strings = "Not Available",
+                                 stringsAsFactors = FALSE)
                 
         #Checking Arguement Validity
                 if(!any(state == unique(data$State))) {
@@ -33,13 +34,11 @@ best <- function(state, outcome) {
                 
         #Select data by state
                 data <- data[data$State == state,]
-                
-        #Converting Mortality Rates to numeric for sorting
-                data[,col_index] <- as.numeric(data[,col_index])
         
         #Order by hopsitals by outcome, ommitting NAs
-               hospitals <- data[order(data[,col_index], na.last = NA), 2]
-               
+               order_index <- order(data[,col_index], data[,2], na.last = NA)        
+               hospitals <- data[order_index, 2]
+
         #Return Best hospital by outcome
                hospitals[1]
         }
