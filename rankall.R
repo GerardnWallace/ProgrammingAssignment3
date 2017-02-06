@@ -41,7 +41,7 @@ rankall <- function(outcome, num = "best") {
                         num <- 1
                 }
                 if (num == "worst") {
-                        num <- length(hospitals)
+                        num <- nrow(hospitals)
                 }
         
         #Return Best hospital by outcome
